@@ -9,6 +9,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/likes/:id", LikesController.getLikesById);
+app.get("/likes", LikesController.getAllLikes);
+
 mongoDB
   .run()
   .then(() => {
