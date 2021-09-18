@@ -8,16 +8,13 @@ Content-Type: application/json
 GET {{host}}/likes/1
 Content-Type: application/json
 
-### Create a Movie
-POST {{host}}
+### Create an Array of Likes for a Person
+POST {{host}}/likes
 Content-Type: application/json
 
 {
-    "title": "Title 7",
-    "overview": "Overview 7",
-    "poster_path": "Path 7",
-    "popularity": 40,
-    "tags": ["tags7"]
+    "id": 10,
+    "likes": [2,4,6,8]
 }
 
 ### Patch a Movie

@@ -34,6 +34,25 @@ class LikesController {
         console.log(err);
       });
   }
+  static createLikes(req, res) {
+    Likes.create({
+      ...req.body,
+      _id: req.body.id,
+    })
+      .then((data) => {
+        res.status(201).json({
+          meta: {
+            success: data.acknowledged,
+          },
+          body: {
+            _id: data.insertedId,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }
 
 module.exports = LikesController;

@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/likes/:id", LikesController.getLikesById);
 app.get("/likes", LikesController.getAllLikes);
+app.post("/likes", LikesController.createLikes);
 
 mongoDB
   .run()
