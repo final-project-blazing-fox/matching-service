@@ -1,8 +1,8 @@
-const { db } = require("../db/config");
+const { db, settings } = require("../db/config");
 
 const mongoDB = db({
-  uri: process.env.DATABASE_URI,
-  databaseName: process.env.DATABASE_NAME,
+  uri: settings[process.env.NODE_ENV]["uri"],
+  databaseName: settings[process.env.NODE_ENV]["databaseName"],
 });
 
 module.exports = { mongoDB };
