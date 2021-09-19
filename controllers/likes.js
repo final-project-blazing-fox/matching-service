@@ -37,7 +37,7 @@ class LikesController {
   static createLikes(req, res) {
     Likes.create({
       ...req.body,
-      _id: req.body.id,
+      _id: +req.body._id,
     })
       .then((data) => {
         res.status(201).json({
