@@ -4,6 +4,7 @@
   "description": "Microservice to serve API related with matching",
   "main": "index.js",
   "scripts": {
+    "dev": "NODE_ENV=development ./node_modules/nodemon/bin/nodemon.js server.js",
     "test": "jest --coverage",
     "prepare": "husky install"
   },
@@ -24,11 +25,13 @@
     "husky": "^7.0.2",
     "jest": "^27.2.0",
     "prettier": "2.4.0",
-    "pretty-quick": "^3.1.1"
+    "pretty-quick": "^3.1.1",
+    "supertest": "^6.1.6"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "mongodb": "^4.1.2"
+    "mongodb": "^4.1.2",
+    "nodemon": "^2.0.12"
   }
 }

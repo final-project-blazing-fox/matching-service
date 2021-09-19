@@ -1,0 +1,30 @@
+@host=http://localhost:3000
+
+### Get All Likes
+GET {{host}}/likes
+Content-Type: application/json
+
+### Get Certain Person's Likes
+GET {{host}}/likes/1
+Content-Type: application/json
+
+### Create an Array of Likes for a Person
+POST {{host}}/likes
+Content-Type: application/json
+
+{
+    "id": 10,
+    "likes": [2,4,6,8]
+}
+
+### Patch a Movie
+PATCH {{host}}/613c88a2ddeee8a071f13af5
+Content-Type: application/json
+
+{
+    "title": "Title Test Patch 7"
+}
+
+### Delete a Movie
+DELETE {{host}}/613c849ce6070783a44b80b5
+Content-Type: application/json
