@@ -6,6 +6,12 @@ on:
     pull_request:
         branches: [ main, staging ]
 
+env:
+    DATABASE_URI_TEST: ${{secrets.DATABASE_URI_TEST}}
+    DATABASE_NAME_TEST: ${{secrets.DATABASE_NAME_TEST}}
+    DATABASE_COLLECTION_TEST: ${{secrets.DATABASE_COLLECTION_TEST}}
+    PORT: ${{secrets.PORT}}
+
 jobs:
     build:
 
