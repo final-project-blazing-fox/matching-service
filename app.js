@@ -11,4 +11,6 @@ app.get("/likes/:id", LikesController.getLikesById);
 app.get("/likes", LikesController.getAllLikes);
 app.post("/likes", LikesController.createLikes);
 
+app.get("/matches/:id", MatchesController.getMatchesById);
+
 module.exports = app;
