@@ -66,4 +66,21 @@ describe("Get likes of a person", () => {
         done();
       });
   });
+
+  describe("Get matches of a person", () => {
+    test("should get matches of a person", (done) => {
+      request(app)
+        .get("/matches/1")
+        .then((response) => {
+          expect(response.statusCode).toBe(200);
+          expect(response.body.body).toHaveProperty(
+            "matches",
+            expect.any(Array)
+          );
+          expect(response.body.body.matches).toHaveLength(2);
+          expect(response.body.body.matches).toEqual([3, 4]);
+          done();
+        });
+    });
+  });
 });

@@ -30,5 +30,5 @@ DELETE {{host}}/613c849ce6070783a44b80b5
 Content-Type: application/json
 
 ### Get Matches of a Person
-GET {{host}}/matches/10
+GET {{host}}/matches/1
 Content-Type: application/json
