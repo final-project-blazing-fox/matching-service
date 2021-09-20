@@ -84,3 +84,20 @@ describe("Get likes of a person", () => {
     });
   });
 });
+
+describe("Update likes of person", () => {
+  test("Should update value of field likes", (done) => {
+    request(app)
+      .patch("/likes/4")
+      .send({
+        likes: [1, 2],
+      })
+      .then((response) => {
+        expect(response.statusCode).toBe(201);
+        expect(response.body.body).toHaveProperty("_id", expect.any(Number));
+        expect(response.body.body).toMatchObject({ _id: 4 });
+        expect(response.body.body).toHaveProperty("likes", expect.any(Array));
+        done();
+      });
+  });
+});
