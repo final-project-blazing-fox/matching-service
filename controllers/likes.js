@@ -53,6 +53,25 @@ class LikesController {
         console.log(err);
       });
   }
+  static updateLikes(req, res) {
+    const { likes } = req.body;
+    const { id } = req.params;
+    Likes.update(+id, { ...req.body })
+      .then((data) => {
+        res.status(201).json({
+          meta: {
+            status: data.acknowledged,
+          },
+          body: {
+            _id: +id,
+            likes: likes,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }
 
 module.exports = LikesController;
