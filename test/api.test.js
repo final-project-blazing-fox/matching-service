@@ -101,3 +101,16 @@ describe("Update likes of person", () => {
       });
   });
 });
+
+describe("Delete likes of person", () => {
+  test("Should delete a record", (done) => {
+    request(app)
+      .delete("/likes/5")
+      .then((response) => {
+        expect(response.statusCode).toBe(200);
+        expect(response.body.body).toHaveProperty("_id", expect.any(Number));
+        expect(response.body.body).toMatchObject({ _id: 5 });
+        done();
+      });
+  });
+});
