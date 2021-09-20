@@ -72,6 +72,23 @@ class LikesController {
         console.log(err);
       });
   }
+  static deleteLikes(req, res) {
+    const { id } = req.params;
+    Likes.destroy(+id)
+      .then((data) => {
+        res.status(200).json({
+          meta: {
+            status: data.acknowledged,
+          },
+          body: {
+            _id: +id,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }
 
 module.exports = LikesController;
