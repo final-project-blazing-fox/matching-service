@@ -20,6 +20,18 @@ class Likes {
       .collection(settings[process.env.NODE_ENV]["collection"]);
     return matcher.insertOne(data);
   }
+  static update(id, data) {
+    const matcher = mongoDB
+      .getDB()
+      .collection(settings[process.env.NODE_ENV]["collection"]);
+    return matcher.updateOne({ _id: id }, { $set: data });
+  }
+  static destroy(id) {
+    const matcher = mongoDB
+      .getDB()
+      .collection(settings[process.env.NODE_ENV]["collection"]);
+    return matcher.deleteOne({ _id: id });
+  }
 }
 
 module.exports = Likes;

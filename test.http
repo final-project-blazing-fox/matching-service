@@ -18,15 +18,15 @@ Content-Type: application/json
 }
 
 ### Patch a Movie
-PATCH {{host}}/613c88a2ddeee8a071f13af5
+PATCH {{host}}/likes/10
 Content-Type: application/json
 
 {
-    "title": "Title Test Patch 7"
+    "likes": [2,4,6,8]
 }
 
 ### Delete a Movie
-DELETE {{host}}/613c849ce6070783a44b80b5
+DELETE {{host}}/likes/null
 Content-Type: application/json
 
 ### Get Matches of a Person
