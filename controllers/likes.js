@@ -1,7 +1,7 @@
 const Likes = require("../model/likes");
 
 class LikesController {
-  static getAllLikes(req, res) {
+  static getAllLikes(req, res, next) {
     Likes.findAll()
       .then((data) => {
         res.status(200).json({
@@ -14,7 +14,7 @@ class LikesController {
         });
       })
       .catch((err) => {
-        console.log(err);
+        next({ name: "INTERNAL SERVER ERROR" });
       });
   }
   static getLikesById(req, res) {
@@ -31,7 +31,7 @@ class LikesController {
         })
       )
       .catch((err) => {
-        console.log(err);
+        next({ name: "INTERNAL SERVER ERROR" });
       });
   }
   static createLikes(req, res) {
@@ -50,7 +50,7 @@ class LikesController {
         });
       })
       .catch((err) => {
-        console.log(err);
+        next({ name: "INTERNAL SERVER ERROR" });
       });
   }
   static updateLikes(req, res) {
@@ -86,7 +86,7 @@ class LikesController {
         });
       })
       .catch((err) => {
-        console.log(err);
+        next({ name: "INTERNAL SERVER ERROR" });
       });
   }
 }
