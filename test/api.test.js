@@ -3,15 +3,14 @@ const { async } = require("q");
 const request = require("supertest");
 const app = require("../app");
 const { mongoDB } = require("../model");
-mongoDB.dropCollection;
 
 beforeAll(async () => {
-  await mongoDB.run().then(async () => {
-    await mongoDB.dropCollection();
-    await mongoDB.bulkInsert();
-  });
+  await mongoDB.run();
+  await mongoDB.dropCollection();
+  await mongoDB.bulkInsert();
 });
 afterAll(async () => {
+  await mongoDB.dropCollection();
   await mongoDB.closeDB();
 });
 
