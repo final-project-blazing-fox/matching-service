@@ -12,6 +12,11 @@ const settings = {
     databaseName: process.env.DATABASE_NAME_TEST,
     collection: process.env.DATABASE_COLLECTION_TEST,
   },
+  production: {
+    uri: process.env.DATABASE_URI_DEVELOPMENT,
+    databaseName: process.env.DATABASE_NAME_DEVELOPMENT,
+    collection: process.env.DATABASE_COLLECTION_DEVELOPMENT,
+  },
 };
 
 const db = ({ uri, databaseName }) => {

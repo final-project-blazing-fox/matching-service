@@ -1,8 +1,8 @@
 const Likes = require("../model/likes");
 
 class LikesController {
-  static getAllLikes(req, res) {
-    Likes.findAll()
+  static getAllLikes(_, res, next) {
+    return Likes.findAll()
       .then((data) => {
         res.status(200).json({
           meta: {
@@ -13,13 +13,13 @@ class LikesController {
           },
         });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        next({ name: "INTERNAL SERVER ERROR" });
       });
   }
-  static getLikesById(req, res) {
+  static getLikesById(req, res, next) {
     const { id } = req.params;
-    Likes.findById(id)
+    return Likes.findById(id)
       .then((data) =>
         res.status(200).json({
           meta: {
@@ -30,12 +30,12 @@ class LikesController {
           },
         })
       )
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        next({ name: "INTERNAL SERVER ERROR" });
       });
   }
-  static createLikes(req, res) {
-    Likes.create({
+  static createLikes(req, res, next) {
+    return Likes.create({
       ...req.body,
       _id: +req.body._id,
     })
@@ -49,8 +49,44 @@ class LikesController {
           },
         });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        next({ name: "INTERNAL SERVER ERROR" });
+      });
+  }
+  static updateLikes(req, res, next) {
+    const { likes } = req.body;
+    const { id } = req.params;
+    return Likes.update(+id, { ...req.body })
+      .then((data) => {
+        res.status(201).json({
+          meta: {
+            status: data.acknowledged,
+          },
+          body: {
+            _id: +id,
+            likes: likes,
+          },
+        });
+      })
+      .catch(() => {
+        next({ name: "INTERNAL SERVER ERROR" });
+      });
+  }
+  static deleteLikes(req, res, next) {
+    const { id } = req.params;
+    return Likes.destroy(+id)
+      .then((data) => {
+        res.status(200).json({
+          meta: {
+            status: data.acknowledged,
+          },
+          body: {
+            _id: +id,
+          },
+        });
+      })
+      .catch(() => {
+        next({ name: "INTERNAL SERVER ERROR" });
       });
   }
 }
