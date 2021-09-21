@@ -1,7 +1,7 @@
 const Matches = require("../model/matches");
 
 class MatchesController {
-  static getMatchesById(req, res) {
+  static getMatchesById(req, res, next) {
     const { id } = req.params;
     Matches.findById(id)
       .then((data) =>
@@ -14,8 +14,8 @@ class MatchesController {
           },
         })
       )
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        next({ name: "INTERNAL SERVER ERROR" });
       });
   }
 }
