@@ -1,8 +1,10 @@
-const { expect, describe } = require("@jest/globals");
-const { async } = require("q");
 const request = require("supertest");
 const app = require("../app");
 const { mongoDB } = require("../model");
+const LikesController = require("../controllers/likes");
+const MatchesController = require("../controllers/matches");
+const { getMockReq } = require("@jest-mock/express");
+const req = getMockReq({ params: { id: "1" } });
 
 beforeAll(async () => {
   await mongoDB.run();
@@ -111,5 +113,73 @@ describe("Delete likes of person", () => {
         expect(response.body.body).toMatchObject({ _id: 5 });
         done();
       });
+  });
+});
+
+// Unit testing to cover catch promise
+
+describe("Get all likes catch part", () => {
+  test("should test catch block ", async () => {
+    expect.assertions(1);
+    try {
+      await LikesController.getAllLikes(1);
+    } catch (e) {
+      expect(e).toBeTruthy();
+    }
+  });
+});
+
+describe("Get likes by id catch part", () => {
+  test("should test catch block ", async () => {
+    expect.assertions(1);
+    try {
+      await LikesController.getLikesById(req);
+    } catch (e) {
+      expect(e).toBeTruthy();
+    }
+  });
+});
+
+describe("Create likes catch part", () => {
+  test("should test catch block ", async () => {
+    expect.assertions(1);
+    try {
+      await LikesController.createLikes(req);
+    } catch (e) {
+      expect(e).toBeTruthy();
+    }
+  });
+});
+
+describe("Update likes catch part", () => {
+  test("should test catch block ", async () => {
+    expect.assertions(1);
+    try {
+      await LikesController.updateLikes(req);
+    } catch (e) {
+      expect(e).toBeTruthy();
+    }
+  });
+});
+
+describe("Delete likes catch part", () => {
+  test("should test catch block ", async () => {
+    expect.assertions(1);
+    try {
+      await LikesController.deleteLikes(req);
+    } catch (e) {
+      expect(e).toBeTruthy();
+    }
+  });
+});
+
+describe("Get matches by id catch part", () => {
+  test("should test catch block ", async () => {
+    expect.assertions(1);
+    try {
+      await MatchesController.getMatchesById(req);
+    } catch (e) {
+      expect(e).toBeTruthy();
+    }
   });
 });

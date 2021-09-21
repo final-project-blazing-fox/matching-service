@@ -17,7 +17,7 @@ Content-Type: application/json
     "likes": [2,4,6,8]
 }
 
-### Patch a Movie
+### Patch a Person's Likes 
 PATCH {{host}}/likes/10
 Content-Type: application/json
 
@@ -25,7 +25,7 @@ Content-Type: application/json
     "likes": [2,4,6,8]
 }
 
-### Delete a Movie
+### Delete a Person's Likes
 DELETE {{host}}/likes/null
 Content-Type: application/json
 
