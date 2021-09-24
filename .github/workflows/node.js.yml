@@ -11,6 +11,7 @@ env:
     DATABASE_NAME_TEST: ${{secrets.DATABASE_NAME_TEST}}
     DATABASE_COLLECTION_TEST: ${{secrets.DATABASE_COLLECTION_TEST}}
     PORT: ${{secrets.PORT}}
+    JWT_SECRET: ${{secrets.JWT_SECRET}}
 
 jobs:
     build:
