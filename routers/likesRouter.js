@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const LikesController = require("../controllers/likes");
+const authorization = require("../middleware/authorization");
 
 router.get("/:id", LikesController.getLikesById);
 router.get("/", LikesController.getAllLikes);
