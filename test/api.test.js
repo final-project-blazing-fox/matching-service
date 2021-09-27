@@ -3,8 +3,13 @@ const app = require("../app");
 const { mongoDB } = require("../model");
 const LikesController = require("../controllers/likes");
 const MatchesController = require("../controllers/matches");
-const { getMockReq } = require("@jest-mock/express");
+const { getMockReq, getMockRes } = require("@jest-mock/express");
 const req = getMockReq({ params: { id: "1" } });
+const authentication = require("../middleware/authentication");
+const { response } = require("express");
+const jwt = require("jsonwebtoken");
+const errorHandler = require("../middleware/errorHandler");
+const authorization = require("../middleware/authorization");
 
 beforeAll(async () => {
   await mongoDB.run();
@@ -16,10 +21,41 @@ afterAll(async () => {
   await mongoDB.closeDB();
 });
 
+const commonHeaders = {
+  access_token:
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnVsbF9uYW1lIjoiTXVsYWkgQmFydSIsImVtYWlsIjoidmlraS55YXB1dHJhQGdtYWlsLmNvbSIsImlzX3ByZW1pdW0iOmZhbHNlLCJpYXQiOjE2MzIyOTQ2MzV9.w1hDI9ruwUsEIFWocqiRmLbjkWaOo8r-5tjvQekkSWs",
+};
+
+const mockResponse = () => {
+  const res = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
+};
+
+describe("Authentication and Authorization", () => {
+  test("should verify the token", async () => {
+    const req = getMockReq(commonHeaders);
+    const res = getMockRes();
+    const next = jest.fn();
+
+    await authentication(req, res, next);
+  });
+
+  test("should authorize", async () => {
+    const req = getMockReq();
+    const res = getMockRes();
+    const next = jest.fn();
+
+    await authorization(req, res, next);
+  });
+});
+
 describe("Create an array of likes for a person", () => {
   test("should create new record", (done) => {
     request(app)
       .post("/likes")
+      .set(commonHeaders)
       .send({
         _id: 11,
         likes: [2, 4, 6, 8],
@@ -36,6 +72,7 @@ describe("Get likes of all person", () => {
   test("should get likes of all person", (done) => {
     request(app)
       .get("/likes")
+      .set(commonHeaders)
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.body.body).toHaveProperty("likes", expect.any(Array));
@@ -55,6 +92,7 @@ describe("Get likes of a person", () => {
   test("should get likes of a person", (done) => {
     request(app)
       .get("/likes/1")
+      .set(commonHeaders)
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.body.body).toHaveProperty("likes", expect.any(Array));
@@ -72,6 +110,7 @@ describe("Get likes of a person", () => {
     test("should get matches of a person", (done) => {
       request(app)
         .get("/matches/1")
+        .set(commonHeaders)
         .then((response) => {
           expect(response.statusCode).toBe(200);
           expect(response.body.body).toHaveProperty(
@@ -90,6 +129,7 @@ describe("Update likes of person", () => {
   test("Should update value of field likes", (done) => {
     request(app)
       .patch("/likes/4")
+      .set(commonHeaders)
       .send({
         likes: [1, 2],
       })
@@ -107,6 +147,7 @@ describe("Delete likes of person", () => {
   test("Should delete a record", (done) => {
     request(app)
       .delete("/likes/5")
+      .set(commonHeaders)
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.body.body).toHaveProperty("_id", expect.any(Number));
@@ -180,6 +221,19 @@ describe("Get matches by id catch part", () => {
       await MatchesController.getMatchesById(req);
     } catch (e) {
       expect(e).toBeTruthy();
+    }
+  });
+});
+
+describe("Error Handler", () => {
+  test("Checking error", async () => {
+    const err = new Error({ name: "" });
+    const req = getMockReq();
+    const res = mockResponse();
+    try {
+      await errorHandler(err, req.res);
+    } catch (error) {
+      expect(error).toBeTruthy();
     }
   });
 });
