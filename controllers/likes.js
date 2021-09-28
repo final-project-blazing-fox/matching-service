@@ -64,7 +64,7 @@ class LikesController {
         if (existingLikes) {
           let combinedLikes = [...likes, ...existingLikes];
           combinedLikes = [...new Set(combinedLikes)];
-          return Likes.update(+id, { ...combinedLikes });
+          return Likes.update(+id, { likes: combinedLikes });
         }
       })
       .then((data) => {
