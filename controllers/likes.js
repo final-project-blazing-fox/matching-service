@@ -56,7 +56,17 @@ class LikesController {
   static updateLikes(req, res, next) {
     const { likes } = req.body;
     const { id } = req.params;
-    return Likes.update(+id, { ...req.body })
+
+    return Likes.findById(id)
+      .then((data) => {
+        let existingLikes = data[0].likes;
+
+        if (existingLikes) {
+          let combinedLikes = [...likes, ...existingLikes];
+          combinedLikes = [...new Set(combinedLikes)];
+          return Likes.update(+id, { ...combinedLikes });
+        }
+      })
       .then((data) => {
         res.status(201).json({
           meta: {
