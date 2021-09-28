@@ -1,7 +1,6 @@
 const errorHandler = (err, req, res, next) => {
   let statusCode,
     error = [];
-  console.dir(err);
   switch (err.name) {
     // case "NOT_LOGIN":
     //   statusCode = 401;
