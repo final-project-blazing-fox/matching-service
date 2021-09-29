@@ -31,3 +31,5 @@ browser/code-intel-extensions/
 jest.config.js
 commitlint.config.js
 *.html
+model/
+middleware/
