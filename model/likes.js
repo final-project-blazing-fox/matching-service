@@ -24,7 +24,7 @@ class Likes {
     const matcher = mongoDB
       .getDB()
       .collection(settings[process.env.NODE_ENV]["collection"]);
-    return matcher.updateOne({ _id: id }, { $set: data });
+    return matcher.updateOne({ _id: id }, { $set: data }, {upsert: true});
   }
   static destroy(id) {
     const matcher = mongoDB
